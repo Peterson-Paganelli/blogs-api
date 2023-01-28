@@ -2,6 +2,7 @@ const { generateToken } = require('../auth/validateJWT');
 const { User } = require('../models');
 const { validateUserJoi } = require('../utils/joi');
 
+const getUsers = async () => User.findAll({ attributes: { exclude: ['password'] } });
 const getUserById = (userId) => User.findByPk(userId);
 const getUserByEmail = (email) => User.findOne({ where: { email } });
 
@@ -21,6 +22,7 @@ const postUser = async ({ displayName, email, password, image }) => {
 };
 
 module.exports = {
+  getUsers,
   getUserById,
   getUserByEmail,
   postUser,

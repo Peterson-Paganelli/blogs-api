@@ -1,4 +1,4 @@
-const { postUser } = require('../service/user.Service');
+const { postUser, getUsers } = require('../service/user.Service');
 
 const postUserController = async (req, res) => {
   const { error, token, type, message } = await postUser(req.body);
@@ -7,6 +7,12 @@ const postUserController = async (req, res) => {
   return res.status(201).json({ token });
 };
 
+const getUserController = async (_req, res) => {
+  const result = await getUsers();
+  return res.status(200).json(result);
+};
+
 module.exports = {
   postUserController,
+  getUserController,
 };

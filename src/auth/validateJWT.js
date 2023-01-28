@@ -18,6 +18,18 @@ const generateToken = (payload) => {
   }
 };
 
+const getToken = (req, res, next) => {
+  try {
+    const { authorization } = req.headers;
+    if (!authorization) return res.status(401).json({ message: 'Token not found' });
+    const result = jwt.verify(authorization, password);
+    if (result.message) return res.status(401).json({ message: 'Expired or invalid token' });
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Expired or invalid token' });
+  }
+}; 
+
 const validateJWT = async (req, res, next) => {
   const token = req.header('Authorization');
   if (!token) {
@@ -39,4 +51,5 @@ const validateJWT = async (req, res, next) => {
 module.exports = {
   validateJWT,
   generateToken,
+  getToken,
 };
