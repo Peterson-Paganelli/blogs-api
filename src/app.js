@@ -7,4 +7,5 @@ app.use(express.json());
 
 app.post('/login', loginController.login);
 app.use(routes);
+
 module.exports = app;
