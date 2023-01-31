@@ -6,7 +6,6 @@ const router = express.Router();
 const categoryController = require('../controller/category.controller');
 
 router.post('/', getToken, categoryController.postCategoryController);
-// router.get('/:id', getToken, categoryController.getUserByIdController);
 router.get('/', getToken, categoryController.getCategoryController);
 
 module.exports = router;

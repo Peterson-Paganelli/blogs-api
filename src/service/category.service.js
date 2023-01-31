@@ -1,6 +1,7 @@
 const { Category } = require('../models');
 
 const getCategories = async () => Category.findAll();
+const getCategoryById = async (id) => Category.findByPk(id);
 
 const postCategory = async (name) => {
   if (!name) {
@@ -13,5 +14,6 @@ const postCategory = async (name) => {
 
 module.exports = {
   getCategories,
+  getCategoryById,
   postCategory,
 };
