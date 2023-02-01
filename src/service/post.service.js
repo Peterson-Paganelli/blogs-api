@@ -4,12 +4,20 @@ const { getUserByEmail } = require('./user.Service');
 const { createPostValidation, comparison } = require('./validations/createPost');
 
 const getPosts = async () => BlogPost.findAll({ 
-      attributes: { exclude: ['user_id'] },
-      include: [
-        { model: User, as: 'user', attributes: { exclude: ['password'] } },
-        { model: Category, as: 'categories' },
-      ],
-    });
+  attributes: { exclude: ['user_id'] },
+  include: [
+    { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories' },
+  ],
+});
+
+const getPostById = async (postId) => BlogPost.findByPk(postId, { 
+  attributes: { exclude: ['user_id'] },
+  include: [
+    { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories' },
+  ], 
+});
 
 const createPost = async (email, title, content, categoryIds) => {
   const error = createPostValidation(title, content, categoryIds);
@@ -38,5 +46,6 @@ const createPost = async (email, title, content, categoryIds) => {
 
 module.exports = {
   getPosts,
+  getPostById,
   createPost,
 };
