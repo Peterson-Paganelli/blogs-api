@@ -1,5 +1,5 @@
-const createPostValidation = (title, content, categoryIds) => {
-  if (!title || !content || !categoryIds) {
+const postValidation = (title, content) => {
+  if (!title || !content) {
       return { type: 400, message: 'Some required fields are missing' };
   }
 };
@@ -11,6 +11,6 @@ const comparison = (resultIds, categoryIds) => {
 };
 
 module.exports = {
-  createPostValidation,
+  postValidation,
   comparison,
 };
