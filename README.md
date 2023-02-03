@@ -2,7 +2,7 @@
 <h1>Descrição</h1>
 <div>
   <p>Projeto desenvolvido na Trybe durante o módulo de Back-End</p>
-  <p>Projeto de criação de um banco de dados e construção de uma API para a construção de um blog. Aplicação feita em Node.js com Sequelize para fazer o CRUD dos posts</p>
+  <p>Projeto de criação de um banco de dados e uma API para a construção de um blog. Aplicação feita em Node.js com Sequelize para fazer o CRUD dos posts</p>
   <details>
   <summary>Detalhes</summary>
     <ul>
