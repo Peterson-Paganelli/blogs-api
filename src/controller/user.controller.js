@@ -1,4 +1,5 @@
-const { postUser, getUsers, getUserById } = require('../service/user.Service');
+const { postUser, getUsers, 
+  getUserById, deleteUser } = require('../service/user.Service');
 
 const postUserController = async (req, res) => {
   const { error, token, type, message } = await postUser(req.body);
@@ -19,8 +20,15 @@ const getUserByIdController = async (req, res) => {
   return res.status(200).json(result);
 };
 
+const deleteUserController = async (req, res) => { 
+  const { type, message } = await deleteUser(req.user);
+  if (type) return res.status(type).json({ message });
+  return res.status(204).json();
+};
+
 module.exports = {
   postUserController,
   getUserController,
   getUserByIdController,
+  deleteUserController,
 };

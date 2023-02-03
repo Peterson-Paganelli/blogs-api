@@ -8,4 +8,5 @@ const userController = require('../controller/user.controller');
 router.post('/', userController.postUserController);
 router.get('/:id', getToken, userController.getUserByIdController);
 router.get('/', getToken, userController.getUserController);
+router.delete('/me', getToken, userController.deleteUserController);
 module.exports = router;

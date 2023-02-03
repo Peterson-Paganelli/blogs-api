@@ -21,9 +21,17 @@ const postUser = async ({ displayName, email, password, image }) => {
   return { token };
 };
 
+const deleteUser = async (email) => {
+  const user = await getUserByEmail(email);
+
+  await User.destroy({ where: { id: user.id } });
+  return { message: 'success' };
+};
+
 module.exports = {
   getUsers,
   getUserById,
   getUserByEmail,
   postUser,
+  deleteUser,
 };
