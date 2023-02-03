@@ -2,6 +2,7 @@ const { Op } = require('sequelize');
 const { BlogPost, Category, PostCategory, User } = require('../models');
 const { getUserByEmail } = require('./user.Service');
 const { postValidation, comparison } = require('./validations/createPost');
+const validateUserPost = require('./validations/validateUserPost');
 
 const getPosts = async () => BlogPost.findAll({ 
   attributes: { exclude: ['user_id'] },
@@ -22,11 +23,8 @@ const getPostById = async (postId) => BlogPost.findByPk(postId, {
 const updatePost = async (email, id, title, content) => { 
   const error = postValidation(title, content);
   if (error) return error;
-  const user = await getUserByEmail(email);
-  const blogPost = await BlogPost.findByPk(id);
-  if (user.id !== blogPost.userId) {
-    return { type: 401, message: 'Unauthorized user' };
-  }
+  const validate = await validateUserPost(id, email);
+  if (validate) return validate;
 
   await BlogPost.update({ title, content }, { where: { id } });
   const result = await getPostById(id);
@@ -57,9 +55,20 @@ const createPost = async (email, title, content, categoryIds) => {
   return result;
 };
 
+const deletePost = async (id, email) => {
+  const getPost = await BlogPost.findByPk(id);
+  if (!getPost) return ({ type: 404, message: 'Post does not exist' });
+  
+  const validate = await validateUserPost(id, email);
+  if (validate) return validate;
+  await BlogPost.destroy({ where: { id } });
+  return { message: 'success' };
+};
+
 module.exports = {
   getPosts,
   getPostById,
   updatePost,
   createPost,
+  deletePost,
 };
