@@ -20,6 +20,21 @@ const getPostById = async (postId) => BlogPost.findByPk(postId, {
   ], 
 });
 
+const searchPost = async (q) => { 
+  const result = await BlogPost.findAll({
+    where: { [Op.or]: [
+      { title: { [Op.like]: `%${q}%` } },
+      { content: { [Op.like]: `%${q}%` } },
+    ] },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories' },
+    ],
+  });
+
+  return result;
+};
+
 const updatePost = async (email, id, title, content) => { 
   const error = postValidation(title, content);
   if (error) return error;
@@ -68,6 +83,7 @@ const deletePost = async (id, email) => {
 module.exports = {
   getPosts,
   getPostById,
+  searchPost,
   updatePost,
   createPost,
   deletePost,
