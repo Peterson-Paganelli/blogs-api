@@ -18,6 +18,7 @@
 <h1>Ferramentas</h1>
 <div>
   <ul>
+    <li>Javascript</li>
     <li>Docker</li>
     <li>Node.js</li>
     <li>Sequelize</li>
